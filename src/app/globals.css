@@ -84,4 +84,24 @@
   body {
     @apply bg-background text-foreground font-mono;
   }
+  a,
+  button,
+  [role="button"],
+  input[type="submit"],
+  input[type="reset"],
+  input[type="button"],
+  select,
+  summary,
+  [tabindex]:not([tabindex="-1"]) {
+    cursor: pointer;
+  }
+  input[type="text"],
+  input[type="number"],
+  input[type="date"],
+  input[type="email"],
+  input[type="password"],
+  input[type="search"],
+  textarea {
+    cursor: text;
+  }
 }
