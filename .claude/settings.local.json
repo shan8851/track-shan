@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bun add:*)",
+      "Bash(bun pm trust:*)",
+      "Bash(bun install:*)",
+      "Bash(bunx shadcn@latest init:*)",
+      "Bash(bunx shadcn@latest add:*)",
+      "Bash(bun run typecheck:*)",
+      "Bash(bun run lint:*)",
+      "Bash(timeout 15 bun run dev:*)",
+      "Bash(timeout 20 bun dev:*)"
+    ]
+  }
+}
