@@ -41,9 +41,9 @@ export const ExerciseTable = ({
       : EXERCISE_TYPE_LABELS[entry.exerciseType] ?? entry.exerciseType;
 
   return (
-    <div className="border border-border overflow-x-auto">
+    <div className="border border-border max-h-80 overflow-auto">
       <Table>
-        <TableHeader>
+        <TableHeader className="sticky top-0 z-10 bg-background">
           <TableRow>
             <TableHead>Date</TableHead>
             <TableHead>Type</TableHead>
