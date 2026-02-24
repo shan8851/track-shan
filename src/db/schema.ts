@@ -1,20 +1,29 @@
-import { integer, real, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import {
+  date,
+  integer,
+  pgTable,
+  real,
+  serial,
+  text,
+  timestamp,
+  uniqueIndex,
+} from "drizzle-orm/pg-core";
 
-export const weightEntries = sqliteTable("weight_entries", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  date: text("date").notNull(),
+export const weightEntries = pgTable("weight_entries", {
+  id: serial("id").primaryKey(),
+  date: date("date", { mode: "string" }).notNull(),
   weightKg: real("weight_kg").notNull(),
-  createdAt: text("created_at")
-    .notNull()
-    .$defaultFn(() => new Date().toISOString()),
-  updatedAt: text("updated_at")
-    .notNull()
-    .$defaultFn(() => new Date().toISOString()),
+  createdAt: timestamp("created_at", { mode: "string", withTimezone: true })
+    .defaultNow()
+    .notNull(),
+  updatedAt: timestamp("updated_at", { mode: "string", withTimezone: true })
+    .defaultNow()
+    .notNull(),
 });
 
-export const exerciseEntries = sqliteTable("exercise_entries", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  date: text("date").notNull(),
+export const exerciseEntries = pgTable("exercise_entries", {
+  id: serial("id").primaryKey(),
+  date: date("date", { mode: "string" }).notNull(),
   exerciseType: text("exercise_type", {
     enum: ["football", "strength_training", "other"],
   }).notNull(),
@@ -23,10 +32,35 @@ export const exerciseEntries = sqliteTable("exercise_entries", {
   effortLevel: text("effort_level", {
     enum: ["low", "medium", "high"],
   }).notNull(),
-  createdAt: text("created_at")
-    .notNull()
-    .$defaultFn(() => new Date().toISOString()),
-  updatedAt: text("updated_at")
-    .notNull()
-    .$defaultFn(() => new Date().toISOString()),
+  createdAt: timestamp("created_at", { mode: "string", withTimezone: true })
+    .defaultNow()
+    .notNull(),
+  updatedAt: timestamp("updated_at", { mode: "string", withTimezone: true })
+    .defaultNow()
+    .notNull(),
 });
+
+export const dailyCheckins = pgTable(
+  "daily_checkins",
+  {
+    id: serial("id").primaryKey(),
+    date: date("date", { mode: "string" }).notNull(),
+    mood: integer("mood").notNull(),
+    sleepQuality: text("sleep_quality", {
+      enum: ["bad", "ok", "good"],
+    }).notNull(),
+    productivity: text("productivity", {
+      enum: ["bad", "ok", "good"],
+    }).notNull(),
+    energyLevel: text("energy_level", {
+      enum: ["bad", "ok", "good"],
+    }).notNull(),
+    createdAt: timestamp("created_at", { mode: "string", withTimezone: true })
+      .defaultNow()
+      .notNull(),
+    updatedAt: timestamp("updated_at", { mode: "string", withTimezone: true })
+      .defaultNow()
+      .notNull(),
+  },
+  (table) => [uniqueIndex("daily_checkins_date_unique").on(table.date)],
+);

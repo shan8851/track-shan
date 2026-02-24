@@ -48,7 +48,7 @@ export const ExerciseSection = () => {
   };
 
   return (
-    <section className="space-y-4">
+    <section className="space-y-4" data-testid="exercise-section">
       <div className="flex items-center justify-between">
         <Link href="/exercise" className="group flex items-center gap-2 hover:opacity-80 transition-opacity">
           <h2 className="text-lg font-bold text-terminal">&gt; exercise</h2>

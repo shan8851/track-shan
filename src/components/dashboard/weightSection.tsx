@@ -48,7 +48,7 @@ export const WeightSection = () => {
   };
 
   return (
-    <section className="space-y-4">
+    <section className="space-y-4" data-testid="weight-section">
       <div className="flex items-center justify-between">
         <Link href="/weight" className="group flex items-center gap-2 hover:opacity-80 transition-opacity">
           <h2 className="text-lg font-bold text-terminal">&gt; weight</h2>

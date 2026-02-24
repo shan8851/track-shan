@@ -5,7 +5,7 @@ Personal single-user tracking dashboard.
 ## Stack
 
 - Next.js 15 App Router + TypeScript (strict)
-- Drizzle ORM + SQLite (better-sqlite3)
+- Drizzle ORM + Postgres (Neon)
 - TanStack Query for server state
 - Tailwind CSS + shadcn/ui
 - Zod for validation
@@ -27,7 +27,7 @@ Terminal/IDE dark theme. JetBrains Mono font. Zero border-radius (sharp edges). 
 
 ## Architecture
 
-Each tracking type (weight, exercise, future: sleep, mood) is self-contained with own:
+Each tracking type (check-in, weight, exercise) is self-contained with own:
 - DB table in `src/db/schema.ts`
 - Zod schema in `src/schemas/`
 - Types in `src/types/`
@@ -43,4 +43,4 @@ Adding a new tracking type should not touch existing code.
 - Keep files under a few hundred lines
 - Small composable components, focused hooks, pure utility functions
 - `layout.tsx`, `page.tsx`, and `route.ts` use default exports (Next.js requirement). Define as named const, then `export default` at bottom.
-- No tests in v1
+- Vitest for unit tests and Playwright for end-to-end coverage

@@ -55,6 +55,7 @@ export const WeightTable = ({ entries, onEdit, onDelete }: WeightTableProps) => 
                     size="sm"
                     onClick={() => onEdit(entry)}
                     className="h-7 w-7 p-0"
+                    aria-label={`Edit weight entry ${entry.id}`}
                   >
                     <Pencil className="h-3.5 w-3.5" />
                   </Button>
@@ -63,6 +64,7 @@ export const WeightTable = ({ entries, onEdit, onDelete }: WeightTableProps) => 
                     size="sm"
                     onClick={() => onDelete(entry)}
                     className="h-7 w-7 p-0 text-destructive hover:text-destructive"
+                    aria-label={`Delete weight entry ${entry.id}`}
                   >
                     <Trash2 className="h-3.5 w-3.5" />
                   </Button>
