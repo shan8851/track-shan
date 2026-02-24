@@ -33,6 +33,13 @@ const metricColorMap: Record<CheckinMetric, string[]> = {
     "hsl(120, 55%, 45%)",
     "hsl(140, 70%, 50%)",
   ],
+  stressLevel: [
+    "hsl(140, 70%, 50%)",
+    "hsl(120, 55%, 45%)",
+    "hsl(50, 80%, 50%)",
+    "hsl(25, 80%, 52%)",
+    "hsl(0, 75%, 55%)",
+  ],
   sleepQuality: [
     "hsl(0, 70%, 55%)",
     "hsl(45, 80%, 52%)",

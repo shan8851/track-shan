@@ -20,8 +20,17 @@ export const MOOD_OPTIONS = [
   { value: 5, emoji: "😄", label: "Great" },
 ] as const;
 
+export const STRESS_OPTIONS = [
+  { value: 1, emoji: "😌", label: "Calm" },
+  { value: 2, emoji: "🙂", label: "Light" },
+  { value: 3, emoji: "😐", label: "Medium" },
+  { value: 4, emoji: "😬", label: "High" },
+  { value: 5, emoji: "🤯", label: "Maxed" },
+] as const;
+
 export const CHECKIN_METRICS = [
   "mood",
+  "stressLevel",
   "sleepQuality",
   "productivity",
   "energyLevel",
@@ -29,6 +38,7 @@ export const CHECKIN_METRICS = [
 
 export const CHECKIN_METRIC_LABELS: Record<string, string> = {
   mood: "Mood",
+  stressLevel: "Stress",
   sleepQuality: "Sleep",
   productivity: "Productivity",
   energyLevel: "Energy",

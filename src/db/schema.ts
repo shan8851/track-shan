@@ -1,4 +1,5 @@
 import {
+  boolean,
   date,
   integer,
   pgTable,
@@ -46,6 +47,11 @@ export const dailyCheckins = pgTable(
     id: serial("id").primaryKey(),
     date: date("date", { mode: "string" }).notNull(),
     mood: integer("mood").notNull(),
+    stressLevel: integer("stress_level").notNull().default(3),
+    sleepHours: real("sleep_hours").notNull().default(0),
+    coffeeCups: integer("coffee_cups").notNull().default(0),
+    lastCoffeeAt: text("last_coffee_at"),
+    hadLateMeal: boolean("had_late_meal").notNull().default(false),
     sleepQuality: text("sleep_quality", {
       enum: ["bad", "ok", "good"],
     }).notNull(),

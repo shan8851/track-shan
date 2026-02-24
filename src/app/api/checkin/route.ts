@@ -31,6 +31,11 @@ const PUT = async (request: NextRequest) => {
       .values({
         date,
         mood: parsed.mood,
+        stressLevel: parsed.stressLevel,
+        sleepHours: parsed.sleepHours,
+        coffeeCups: parsed.coffeeCups,
+        lastCoffeeAt: parsed.lastCoffeeAt,
+        hadLateMeal: parsed.hadLateMeal,
         sleepQuality: parsed.sleepQuality,
         productivity: parsed.productivity,
         energyLevel: parsed.energyLevel,
@@ -39,6 +44,11 @@ const PUT = async (request: NextRequest) => {
         target: dailyCheckins.date,
         set: {
           mood: parsed.mood,
+          stressLevel: parsed.stressLevel,
+          sleepHours: parsed.sleepHours,
+          coffeeCups: parsed.coffeeCups,
+          lastCoffeeAt: parsed.lastCoffeeAt,
+          hadLateMeal: parsed.hadLateMeal,
           sleepQuality: parsed.sleepQuality,
           productivity: parsed.productivity,
           energyLevel: parsed.energyLevel,

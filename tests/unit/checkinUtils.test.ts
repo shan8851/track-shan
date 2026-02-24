@@ -18,6 +18,11 @@ const entries: DailyCheckinEntry[] = [
     id: 4,
     date: "2026-02-22",
     mood: 4,
+    stressLevel: 2,
+    sleepHours: 7.5,
+    coffeeCups: 2,
+    lastCoffeeAt: "14:30",
+    hadLateMeal: false,
     sleepQuality: "good",
     productivity: "ok",
     energyLevel: "good",
@@ -28,6 +33,11 @@ const entries: DailyCheckinEntry[] = [
     id: 3,
     date: "2026-02-21",
     mood: 3,
+    stressLevel: 3,
+    sleepHours: 6.5,
+    coffeeCups: 3,
+    lastCoffeeAt: "16:15",
+    hadLateMeal: true,
     sleepQuality: "ok",
     productivity: "good",
     energyLevel: "ok",
@@ -38,6 +48,11 @@ const entries: DailyCheckinEntry[] = [
     id: 2,
     date: "2026-02-20",
     mood: 5,
+    stressLevel: 1,
+    sleepHours: 8,
+    coffeeCups: 1,
+    lastCoffeeAt: "11:00",
+    hadLateMeal: false,
     sleepQuality: "good",
     productivity: "good",
     energyLevel: "good",
@@ -48,6 +63,11 @@ const entries: DailyCheckinEntry[] = [
     id: 1,
     date: "2026-02-18",
     mood: 2,
+    stressLevel: 4,
+    sleepHours: 5.5,
+    coffeeCups: 4,
+    lastCoffeeAt: "18:45",
+    hadLateMeal: true,
     sleepQuality: "bad",
     productivity: "bad",
     energyLevel: "ok",
@@ -97,6 +117,11 @@ describe("checkinUtils", () => {
   it("builds mood distribution", () => {
     const moodBuckets = buildMetricDistribution(entries, "mood");
     expect(moodBuckets.map((bucket) => bucket.count)).toEqual([0, 1, 1, 1, 1]);
+  });
+
+  it("builds stress distribution", () => {
+    const stressBuckets = buildMetricDistribution(entries, "stressLevel");
+    expect(stressBuckets.map((bucket) => bucket.count)).toEqual([1, 1, 1, 1, 0]);
   });
 
   it("builds quality distribution", () => {
