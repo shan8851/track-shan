@@ -1,7 +1,7 @@
 # track-shan
 
 Simple personal tracking app for:
-- Daily check-ins (mood, stress, sleep quality + duration, productivity, energy, coffee, late meal)
+- Daily check-ins (mood, stress, sleep quality + duration, productivity, energy, coffee cups + last cup time, late meal)
 - Weight entries
 - Exercise sessions
 - Quick stats and charts

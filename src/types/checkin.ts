@@ -20,6 +20,7 @@ export type DailyCheckinEntry = {
   stressLevel: MoodValue;
   sleepHours: number;
   coffeeCups: number;
+  lastCoffeeAt: string | null;
   hadLateMeal: boolean;
   sleepQuality: CheckinQuality;
   productivity: CheckinQuality;

@@ -98,6 +98,7 @@ describe("check-in schemas", () => {
       stressLevel: 2,
       sleepHours: 7.5,
       coffeeCups: 2,
+      lastCoffeeAt: "14:30",
       hadLateMeal: false,
       sleepQuality: "good",
       productivity: "ok",
@@ -110,6 +111,20 @@ describe("check-in schemas", () => {
       stressLevel: 6,
       sleepHours: 30,
       coffeeCups: -1,
+      lastCoffeeAt: "25:00",
+      hadLateMeal: false,
+      sleepQuality: "good",
+      productivity: "ok",
+      energyLevel: "good",
+    });
+
+    const invalidCoffeeTime = upsertDailyCheckinSchema.safeParse({
+      date: "2026-02-24",
+      mood: 4,
+      stressLevel: 2,
+      sleepHours: 7.5,
+      coffeeCups: 0,
+      lastCoffeeAt: "09:00",
       hadLateMeal: false,
       sleepQuality: "good",
       productivity: "ok",
@@ -118,5 +133,6 @@ describe("check-in schemas", () => {
 
     expect(valid.success).toBe(true);
     expect(invalid.success).toBe(false);
+    expect(invalidCoffeeTime.success).toBe(false);
   });
 });

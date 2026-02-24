@@ -50,6 +50,7 @@ export const DailyCheckinForm = () => {
   const [stressLevelDraft, setStressLevelDraft] = useState<MoodValue | null>(null);
   const [sleepHoursDraft, setSleepHoursDraft] = useState<string | null>(null);
   const [coffeeCupsDraft, setCoffeeCupsDraft] = useState<string | null>(null);
+  const [lastCoffeeAtDraft, setLastCoffeeAtDraft] = useState<string | null>(null);
   const [hadLateMealDraft, setHadLateMealDraft] = useState<boolean | null>(null);
   const [sleepQualityDraft, setSleepQualityDraft] = useState<CheckinQuality | null>(null);
   const [productivityDraft, setProductivityDraft] = useState<CheckinQuality | null>(null);
@@ -70,6 +71,8 @@ export const DailyCheckinForm = () => {
     sleepHoursDraft ?? (selectedEntry ? `${selectedEntry.sleepHours}` : "7.5");
   const coffeeCupsInput =
     coffeeCupsDraft ?? (selectedEntry ? `${selectedEntry.coffeeCups}` : "0");
+  const lastCoffeeAtInput =
+    lastCoffeeAtDraft ?? (selectedEntry?.lastCoffeeAt ?? "");
   const hadLateMeal = hadLateMealDraft ?? selectedEntry?.hadLateMeal ?? false;
   const sleepQuality = sleepQualityDraft ?? selectedEntry?.sleepQuality ?? "ok";
   const productivity = productivityDraft ?? selectedEntry?.productivity ?? "ok";
@@ -84,15 +87,25 @@ export const DailyCheckinForm = () => {
     !Number.isNaN(parsedCoffeeCups) &&
     parsedCoffeeCups >= 0 &&
     parsedCoffeeCups <= 20;
+  const normalizedLastCoffeeAt =
+    parsedCoffeeCups > 0 ? (lastCoffeeAtInput.trim() || null) : null;
+  const isLastCoffeeAtValid =
+    normalizedLastCoffeeAt === null ||
+    /^([01]\d|2[0-3]):([0-5]\d)$/u.test(normalizedLastCoffeeAt);
 
   const isPending = upsertMutation.isPending || deleteMutation.isPending;
-  const canSave = !isPending && isSleepHoursValid && isCoffeeCupsValid;
+  const canSave =
+    !isPending &&
+    isSleepHoursValid &&
+    isCoffeeCupsValid &&
+    isLastCoffeeAtValid;
 
   const clearDrafts = () => {
     setMoodDraft(null);
     setStressLevelDraft(null);
     setSleepHoursDraft(null);
     setCoffeeCupsDraft(null);
+    setLastCoffeeAtDraft(null);
     setHadLateMealDraft(null);
     setSleepQualityDraft(null);
     setProductivityDraft(null);
@@ -100,7 +113,7 @@ export const DailyCheckinForm = () => {
   };
 
   const handleSave = async () => {
-    if (!isSleepHoursValid || !isCoffeeCupsValid) return;
+    if (!isSleepHoursValid || !isCoffeeCupsValid || !isLastCoffeeAtValid) return;
 
     try {
       await upsertMutation.mutateAsync({
@@ -109,6 +122,7 @@ export const DailyCheckinForm = () => {
         stressLevel,
         sleepHours: parsedSleepHours,
         coffeeCups: parsedCoffeeCups,
+        lastCoffeeAt: normalizedLastCoffeeAt,
         hadLateMeal,
         sleepQuality,
         productivity,
@@ -211,6 +225,18 @@ export const DailyCheckinForm = () => {
           />
         </div>
       </div>
+
+      {parsedCoffeeCups > 0 && (
+        <div className="space-y-2">
+          <Label htmlFor="last-coffee-at">Last coffee time</Label>
+          <Input
+            id="last-coffee-at"
+            type="time"
+            value={lastCoffeeAtInput}
+            onChange={(event) => setLastCoffeeAtDraft(event.target.value)}
+          />
+        </div>
+      )}
 
       <div className="space-y-2">
         <Label>Late meal</Label>
