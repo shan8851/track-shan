@@ -30,9 +30,9 @@ export const WeightTable = ({ entries, onEdit, onDelete }: WeightTableProps) => 
   }
 
   return (
-    <div className="border border-border overflow-x-auto">
+    <div className="border border-border max-h-80 overflow-auto">
       <Table>
-        <TableHeader>
+        <TableHeader className="sticky top-0 z-10 bg-background">
           <TableRow>
             <TableHead>Date</TableHead>
             <TableHead>Weight</TableHead>
