@@ -9,9 +9,14 @@ import {
   CHECKIN_QUALITY_LABELS,
   CHECKIN_QUALITY_VALUES,
   MOOD_OPTIONS,
+  STRESS_OPTIONS,
 } from "@/lib/constants";
 import { todayDateString } from "@/lib/formatters";
-import { useCheckinEntries, useDeleteCheckinByDate, useUpsertCheckin } from "@/hooks/useCheckin";
+import {
+  useCheckinEntries,
+  useDeleteCheckinByDate,
+  useUpsertCheckin,
+} from "@/hooks/useCheckin";
 import type { CheckinQuality, MoodValue } from "@/types/checkin";
 
 type QualitySelectorProps = {
@@ -42,6 +47,10 @@ const QualitySelector = ({ label, value, onChange }: QualitySelectorProps) => (
 export const DailyCheckinForm = () => {
   const [date, setDate] = useState(todayDateString());
   const [moodDraft, setMoodDraft] = useState<MoodValue | null>(null);
+  const [stressLevelDraft, setStressLevelDraft] = useState<MoodValue | null>(null);
+  const [sleepHoursDraft, setSleepHoursDraft] = useState<string | null>(null);
+  const [coffeeCupsDraft, setCoffeeCupsDraft] = useState<string | null>(null);
+  const [hadLateMealDraft, setHadLateMealDraft] = useState<boolean | null>(null);
   const [sleepQualityDraft, setSleepQualityDraft] = useState<CheckinQuality | null>(null);
   const [productivityDraft, setProductivityDraft] = useState<CheckinQuality | null>(null);
   const [energyLevelDraft, setEnergyLevelDraft] = useState<CheckinQuality | null>(null);
@@ -56,17 +65,51 @@ export const DailyCheckinForm = () => {
   );
 
   const mood = moodDraft ?? selectedEntry?.mood ?? 3;
+  const stressLevel = stressLevelDraft ?? selectedEntry?.stressLevel ?? 3;
+  const sleepHoursInput =
+    sleepHoursDraft ?? (selectedEntry ? `${selectedEntry.sleepHours}` : "7.5");
+  const coffeeCupsInput =
+    coffeeCupsDraft ?? (selectedEntry ? `${selectedEntry.coffeeCups}` : "0");
+  const hadLateMeal = hadLateMealDraft ?? selectedEntry?.hadLateMeal ?? false;
   const sleepQuality = sleepQualityDraft ?? selectedEntry?.sleepQuality ?? "ok";
   const productivity = productivityDraft ?? selectedEntry?.productivity ?? "ok";
   const energyLevel = energyLevelDraft ?? selectedEntry?.energyLevel ?? "ok";
 
+  const parsedSleepHours = Number.parseFloat(sleepHoursInput);
+  const parsedCoffeeCups = Number.parseInt(coffeeCupsInput, 10);
+
+  const isSleepHoursValid =
+    !Number.isNaN(parsedSleepHours) && parsedSleepHours >= 0 && parsedSleepHours <= 24;
+  const isCoffeeCupsValid =
+    !Number.isNaN(parsedCoffeeCups) &&
+    parsedCoffeeCups >= 0 &&
+    parsedCoffeeCups <= 20;
+
   const isPending = upsertMutation.isPending || deleteMutation.isPending;
+  const canSave = !isPending && isSleepHoursValid && isCoffeeCupsValid;
+
+  const clearDrafts = () => {
+    setMoodDraft(null);
+    setStressLevelDraft(null);
+    setSleepHoursDraft(null);
+    setCoffeeCupsDraft(null);
+    setHadLateMealDraft(null);
+    setSleepQualityDraft(null);
+    setProductivityDraft(null);
+    setEnergyLevelDraft(null);
+  };
 
   const handleSave = async () => {
+    if (!isSleepHoursValid || !isCoffeeCupsValid) return;
+
     try {
       await upsertMutation.mutateAsync({
         date,
         mood,
+        stressLevel,
+        sleepHours: parsedSleepHours,
+        coffeeCups: parsedCoffeeCups,
+        hadLateMeal,
         sleepQuality,
         productivity,
         energyLevel,
@@ -79,10 +122,7 @@ export const DailyCheckinForm = () => {
   const handleDelete = async () => {
     try {
       await deleteMutation.mutateAsync(date);
-      setMoodDraft(null);
-      setSleepQualityDraft(null);
-      setProductivityDraft(null);
-      setEnergyLevelDraft(null);
+      clearDrafts();
     } catch {
       // handled by TanStack Query
     }
@@ -98,10 +138,7 @@ export const DailyCheckinForm = () => {
           value={date}
           onChange={(event) => {
             setDate(event.target.value);
-            setMoodDraft(null);
-            setSleepQualityDraft(null);
-            setProductivityDraft(null);
-            setEnergyLevelDraft(null);
+            clearDrafts();
           }}
           required
         />
@@ -123,6 +160,77 @@ export const DailyCheckinForm = () => {
               <span className="text-lg">{option.emoji}</span>
             </Button>
           ))}
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <Label>Stress</Label>
+        <div className="grid grid-cols-5 gap-2">
+          {STRESS_OPTIONS.map((option) => (
+            <Button
+              key={option.value}
+              type="button"
+              variant={stressLevel === option.value ? "default" : "outline"}
+              size="sm"
+              onClick={() => setStressLevelDraft(option.value)}
+              className="h-12"
+              aria-label={`Stress ${option.value} ${option.label}`}
+            >
+              <span className="text-lg">{option.emoji}</span>
+            </Button>
+          ))}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="space-y-2">
+          <Label htmlFor="sleep-hours">Sleep duration (hours)</Label>
+          <Input
+            id="sleep-hours"
+            type="number"
+            inputMode="decimal"
+            min={0}
+            max={24}
+            step={0.25}
+            value={sleepHoursInput}
+            onChange={(event) => setSleepHoursDraft(event.target.value)}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="coffee-cups">Coffee (cups)</Label>
+          <Input
+            id="coffee-cups"
+            type="number"
+            inputMode="numeric"
+            min={0}
+            max={20}
+            step={1}
+            value={coffeeCupsInput}
+            onChange={(event) => setCoffeeCupsDraft(event.target.value)}
+          />
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <Label>Late meal</Label>
+        <div className="grid grid-cols-2 gap-2">
+          <Button
+            type="button"
+            variant={hadLateMeal ? "default" : "outline"}
+            size="sm"
+            onClick={() => setHadLateMealDraft(true)}
+          >
+            Yes
+          </Button>
+          <Button
+            type="button"
+            variant={!hadLateMeal ? "default" : "outline"}
+            size="sm"
+            onClick={() => setHadLateMealDraft(false)}
+          >
+            No
+          </Button>
         </div>
       </div>
 
@@ -164,7 +272,7 @@ export const DailyCheckinForm = () => {
               Delete
             </Button>
           )}
-          <Button type="button" size="sm" onClick={handleSave} disabled={isPending}>
+          <Button type="button" size="sm" onClick={handleSave} disabled={!canSave}>
             {isPending ? "Saving..." : selectedEntry ? "Update Day" : "Save Day"}
           </Button>
         </div>

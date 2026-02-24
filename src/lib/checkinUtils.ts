@@ -1,4 +1,8 @@
-import { CHECKIN_QUALITY_LABELS, MOOD_OPTIONS } from "@/lib/constants";
+import {
+  CHECKIN_QUALITY_LABELS,
+  MOOD_OPTIONS,
+  STRESS_OPTIONS,
+} from "@/lib/constants";
 import type {
   CheckinConsistencyDay,
   CheckinDistributionBucket,
@@ -90,7 +94,7 @@ const moodDistribution = (
 
 const qualityDistribution = (
   entries: readonly DailyCheckinEntry[],
-  metric: Exclude<CheckinMetric, "mood">,
+  metric: Exclude<CheckinMetric, "mood" | "stressLevel">,
 ): CheckinDistributionBucket[] => {
   const qualityKeys = ["bad", "ok", "good"] as const;
 
@@ -101,13 +105,23 @@ const qualityDistribution = (
   }));
 };
 
+const stressDistribution = (
+  entries: readonly DailyCheckinEntry[],
+): CheckinDistributionBucket[] =>
+  STRESS_OPTIONS.map((option) => ({
+    key: String(option.value),
+    label: `${option.emoji} ${option.value}`,
+    count: entries.filter((entry) => entry.stressLevel === option.value).length,
+  }));
+
 export const buildMetricDistribution = (
   entries: readonly DailyCheckinEntry[],
   metric: CheckinMetric,
-): CheckinDistributionBucket[] =>
-  metric === "mood"
-    ? moodDistribution(entries)
-    : qualityDistribution(entries, metric);
+): CheckinDistributionBucket[] => {
+  if (metric === "mood") return moodDistribution(entries);
+  if (metric === "stressLevel") return stressDistribution(entries);
+  return qualityDistribution(entries, metric);
+};
 
 export const buildRecentCheckinDays = (
   entries: readonly DailyCheckinEntry[],

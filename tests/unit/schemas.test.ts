@@ -5,6 +5,7 @@ import {
   exerciseQuerySchema,
   updateExerciseSchema,
 } from "@/schemas/exercise";
+import { upsertDailyCheckinSchema } from "@/schemas/checkin";
 import {
   createWeightSchema,
   updateWeightSchema,
@@ -86,5 +87,36 @@ describe("exercise schemas", () => {
       page: 3,
       pageSize: 20,
     });
+  });
+});
+
+describe("check-in schemas", () => {
+  it("validates the expanded daily check-in payload", () => {
+    const valid = upsertDailyCheckinSchema.safeParse({
+      date: "2026-02-24",
+      mood: 4,
+      stressLevel: 2,
+      sleepHours: 7.5,
+      coffeeCups: 2,
+      hadLateMeal: false,
+      sleepQuality: "good",
+      productivity: "ok",
+      energyLevel: "good",
+    });
+
+    const invalid = upsertDailyCheckinSchema.safeParse({
+      date: "2026-02-24",
+      mood: 4,
+      stressLevel: 6,
+      sleepHours: 30,
+      coffeeCups: -1,
+      hadLateMeal: false,
+      sleepQuality: "good",
+      productivity: "ok",
+      energyLevel: "good",
+    });
+
+    expect(valid.success).toBe(true);
+    expect(invalid.success).toBe(false);
   });
 });

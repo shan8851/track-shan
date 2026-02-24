@@ -4,7 +4,12 @@ import type { upsertDailyCheckinSchema } from "@/schemas/checkin";
 
 export type CheckinQuality = "bad" | "ok" | "good";
 export type MoodValue = 1 | 2 | 3 | 4 | 5;
-export type CheckinMetric = "mood" | "sleepQuality" | "productivity" | "energyLevel";
+export type CheckinMetric =
+  | "mood"
+  | "stressLevel"
+  | "sleepQuality"
+  | "productivity"
+  | "energyLevel";
 
 export type UpsertDailyCheckinInput = z.infer<typeof upsertDailyCheckinSchema>;
 
@@ -12,6 +17,10 @@ export type DailyCheckinEntry = {
   id: number;
   date: string;
   mood: MoodValue;
+  stressLevel: MoodValue;
+  sleepHours: number;
+  coffeeCups: number;
+  hadLateMeal: boolean;
   sleepQuality: CheckinQuality;
   productivity: CheckinQuality;
   energyLevel: CheckinQuality;
