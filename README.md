@@ -71,6 +71,8 @@ Open `http://localhost:3000`.
 - `bun run db:generate` - generate Drizzle artifacts
 - `bun run db:migrate` - apply migrations
 - `bun run db:studio` - open Drizzle Studio
+- `bun run checkin -- --interactive` - interactive CLI check-in entry
+- `bun run checkin -- --mood 4 --stress 2 --sleep-hours 7.5 --coffee-cups 2 --last-coffee 14:30 --late-meal no --sleep-quality good --productivity ok --energy good` - flags mode CLI check-in entry
 - `bun run test` - run unit tests (Vitest)
 - `bun run test:e2e` - run E2E tests (Playwright)
 - `bun run playwright:install` - install Playwright Chromium
@@ -113,6 +115,36 @@ make test-e2e ALLOW_TEST_DB_RESET=true TEST_DATABASE_URL=postgresql://... TEST_D
 make db-push
 make clean
 ```
+
+## CLI quick entry
+
+Use the local CLI to log check-ins without opening the UI.
+
+Interactive mode:
+
+```bash
+bun run checkin -- --interactive
+```
+
+Flags mode:
+
+```bash
+bun run checkin -- \
+  --mood 4 \
+  --stress 2 \
+  --sleep-hours 7.5 \
+  --coffee-cups 2 \
+  --last-coffee 14:30 \
+  --late-meal no \
+  --sleep-quality good \
+  --productivity ok \
+  --energy good
+```
+
+Optional environment variables:
+
+- `TRACK_SHAN_BASE_URL` (default: `http://localhost:3000`)
+- `TRACK_SHAN_WRITE_TOKEN` (optional header for protected write endpoints)
 
 ## Data model
 
