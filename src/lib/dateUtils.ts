@@ -78,3 +78,26 @@ export const computeDateStreak = (
     streak += 1;
   }
 };
+
+export const computeWeeklyStreak = (
+  dateStrings: readonly string[],
+  now: Date = new Date(),
+): number => {
+  if (dateStrings.length === 0) return 0;
+
+  const dateSet = new Set(dateStrings);
+  let streak = 0;
+  let weekOffset = 0;
+
+  while (true) {
+    const week = getWeekRange(now, -weekOffset);
+    const hasEntry = [...dateSet].some(
+      (d) => d >= week.start && d <= week.end,
+    );
+
+    if (!hasEntry) return streak;
+
+    streak += 1;
+    weekOffset += 1;
+  }
+};

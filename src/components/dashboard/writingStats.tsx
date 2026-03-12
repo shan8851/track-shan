@@ -39,9 +39,9 @@ export const WritingStats = () => {
         value={stats.totalEntries}
       />
       <StatCard
-        label="Streak"
+        label="Weekly Streak"
         value={stats.currentStreak}
-        unit="days"
+        unit="weeks"
       />
       <StatCard
         label="Most Active"

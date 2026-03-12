@@ -127,7 +127,7 @@ export const WeeklyPulse = () => {
   const writingPieces = writingStats?.thisWeekCount ?? 0;
   const writingMeta =
     writingStats?.currentStreak ?
-      `${writingStats.currentStreak}d streak` :
+      `${writingStats.currentStreak}w streak` :
       writingStats?.mostActiveType ?
         WRITING_TYPE_LABELS[writingStats.mostActiveType] ??
         writingStats.mostActiveType :

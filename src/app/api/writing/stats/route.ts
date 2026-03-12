@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import { db } from "@/db";
 import { writingEntries } from "@/db/schema";
 import {
-  computeDateStreak,
+  computeWeeklyStreak,
   getMonthRange,
   getWeekRange,
   isDateInRange,
@@ -57,7 +57,7 @@ const GET = async () => {
       thisWeekCount,
       thisMonthCount,
       typeBreakdown,
-      currentStreak: computeDateStreak(entries.map((entry) => entry.date)),
+      currentStreak: computeWeeklyStreak(entries.map((entry) => entry.date)),
       mostActiveType,
       totalEntries: entries.length,
     };
