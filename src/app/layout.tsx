@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
 
+import { Sidebar } from "@/components/shared/sidebar";
 import { QueryProvider } from "@/providers/queryProvider";
 
 import "./globals.css";
@@ -22,7 +23,12 @@ const RootLayout = ({
 }>) => (
   <html lang="en" className="dark">
     <body className={`${jetbrainsMono.variable} antialiased`}>
-      <QueryProvider>{children}</QueryProvider>
+      <QueryProvider>
+        <div className="min-h-screen bg-background">
+          <Sidebar />
+          <div className="pl-14">{children}</div>
+        </div>
+      </QueryProvider>
     </body>
   </html>
 );

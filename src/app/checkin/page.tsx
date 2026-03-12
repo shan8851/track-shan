@@ -25,10 +25,8 @@ const CheckinPage = () => {
 
   return (
     <main className="min-h-screen bg-background">
-      <PageHeader backHref="/" />
+      <PageHeader backHref="/" title="> daily check-in" />
       <div className="max-w-5xl mx-auto px-6 py-8 space-y-8">
-        <h2 className="text-lg font-bold text-terminal">&gt; daily check-in</h2>
-
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <StatCard label="Today Mood" value={todayMood} />
           <StatCard label="Total Entries" value={summary.totalEntries} />

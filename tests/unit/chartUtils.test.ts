@@ -102,7 +102,7 @@ describe("chartUtils", () => {
     expect(intensityMap.get("2026-02-02")).toBe(1);
     expect(intensityMap.get("2026-02-07")).toBe(5);
     expect(heatmapColor(0)).toBe("var(--secondary)");
-    expect(heatmapColor(5)).toBe("hsl(140, 70%, 50%, 0.95)");
+    expect(heatmapColor(5)).toBe("rgba(92, 200, 212, 0.9)");
     expect(heatmapColor(99)).toBe("var(--secondary)");
   });
 

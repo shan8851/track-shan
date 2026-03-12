@@ -2,6 +2,13 @@ export const DEFAULT_PAGE_SIZE = 10;
 
 export const EXERCISE_TYPES = ["football", "strength_training", "other"] as const;
 
+export const WRITING_TYPES = [
+  "blog_post",
+  "runbook_docs",
+  "tweet",
+  "other",
+] as const;
+
 export const EFFORT_LEVELS = ["low", "medium", "high"] as const;
 
 export const CHECKIN_QUALITY_VALUES = ["bad", "ok", "good"] as const;
@@ -52,14 +59,21 @@ export const CHECKIN_TIME_RANGES = [
 ] as const;
 
 export const EFFORT_COLORS: Record<string, string> = {
-  low: "bg-blue-500/20 text-blue-400 border-blue-500/30",
-  medium: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
-  high: "bg-red-500/20 text-red-400 border-red-500/30",
+  low: "border-signal-green/35 bg-signal-green/15 text-signal-green",
+  medium: "border-signal-orange/35 bg-signal-orange/15 text-signal-orange",
+  high: "border-signal-red/35 bg-signal-red/15 text-signal-red",
 };
 
 export const EXERCISE_TYPE_LABELS: Record<string, string> = {
   football: "Football",
   strength_training: "Strength Training",
+  other: "Other",
+};
+
+export const WRITING_TYPE_LABELS: Record<string, string> = {
+  blog_post: "Blog Post",
+  runbook_docs: "Runbook / Docs",
+  tweet: "Tweet",
   other: "Other",
 };
 

@@ -84,16 +84,28 @@ export const WeightLineChart = () => {
         <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
           Weight Over Time
         </h3>
-        <TimeRangeSelector selected={selectedRange} onSelect={setSelectedRange} />
+        <TimeRangeSelector
+          selected={selectedRange}
+          onSelect={setSelectedRange}
+        />
       </div>
-      <ChartContainer config={chartConfig} className="h-80 w-full border border-border bg-card p-4">
-        <LineChart data={chartData} margin={{ top: 8, right: 8, bottom: 0, left: 0 }}>
+      <ChartContainer
+        config={chartConfig}
+        className="h-80 w-full border border-border bg-card p-4"
+      >
+        <LineChart
+          data={chartData}
+          margin={{ top: 8, right: 8, bottom: 0, left: 0 }}
+        >
           <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
           <XAxis
             dataKey="date"
             tickFormatter={(value: string) => {
-              const d = new Date(value + "T00:00:00");
-              return d.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+              const d = new Date(value + 'T00:00:00');
+              return d.toLocaleDateString('en-GB', {
+                day: 'numeric',
+                month: 'short',
+              });
             }}
             className="text-muted-foreground"
             tick={{ fontSize: 10 }}
@@ -109,7 +121,7 @@ export const WeightLineChart = () => {
           <ReferenceArea
             y1={WEIGHT_GOAL_MIN}
             y2={WEIGHT_GOAL_MAX}
-            fill="hsl(140, 70%, 50%)"
+            fill="var(--chart-3)"
             fillOpacity={0.08}
             strokeOpacity={0}
           />
@@ -153,10 +165,12 @@ export const WeightLineChart = () => {
           <span className="inline-block w-3 h-0.5 bg-chart-1" /> Weight
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="inline-block w-3 h-0.5 bg-chart-2 border-t border-dashed border-chart-2" /> 7d MA
+          <span className="inline-block w-3 h-0.5 bg-chart-2 border-t border-dashed border-chart-2" />{' '}
+          7d MA
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="inline-block w-3 h-0.5 bg-chart-4 border-t border-dashed border-chart-4" /> 30d MA
+          <span className="inline-block w-3 h-0.5 bg-chart-4 border-t border-dashed border-chart-4" />{' '}
+          30d MA
         </span>
         <span className="flex items-center gap-1.5">
           <span className="inline-block w-3 h-2 bg-terminal/10" /> Goal Range

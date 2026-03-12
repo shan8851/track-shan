@@ -41,6 +41,23 @@ export const exerciseEntries = pgTable("exercise_entries", {
     .notNull(),
 });
 
+export const writingEntries = pgTable("writing_entries", {
+  id: serial("id").primaryKey(),
+  date: date("date", { mode: "string" }).notNull(),
+  writingType: text("writing_type", {
+    enum: ["blog_post", "runbook_docs", "tweet", "other"],
+  }).notNull(),
+  title: text("title").notNull(),
+  url: text("url"),
+  published: boolean("published").notNull().default(false),
+  createdAt: timestamp("created_at", { mode: "string", withTimezone: true })
+    .defaultNow()
+    .notNull(),
+  updatedAt: timestamp("updated_at", { mode: "string", withTimezone: true })
+    .defaultNow()
+    .notNull(),
+});
+
 export const dailyCheckins = pgTable(
   "daily_checkins",
   {

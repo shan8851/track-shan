@@ -21,7 +21,8 @@ export const moodLabel = (value: number): string =>
 export const daysAgoString = (days: number, now: Date = new Date()): string => {
   const date = new Date(now);
   date.setDate(date.getDate() - days);
-  return date.toISOString().split("T")[0] ?? "";
+  date.setHours(0, 0, 0, 0);
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 };
 
 export const filterByDays = (
@@ -48,7 +49,7 @@ export const computeStreakDays = (
   while (true) {
     const checkDate = new Date(today);
     checkDate.setDate(today.getDate() - streak);
-    const checkDateString = checkDate.toISOString().split("T")[0] ?? "";
+    const checkDateString = `${checkDate.getFullYear()}-${String(checkDate.getMonth() + 1).padStart(2, "0")}-${String(checkDate.getDate()).padStart(2, "0")}`;
     if (!uniqueDates.has(checkDateString)) break;
     streak += 1;
   }
@@ -68,7 +69,7 @@ export const computeCheckinSummary = (
   entries: readonly DailyCheckinEntry[],
   now: Date = new Date(),
 ): DailyCheckinSummary => {
-  const todayString = now.toISOString().split("T")[0] ?? "";
+  const todayString = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
   const today = entries.find((entry) => entry.date === todayString) ?? null;
   const recent30dDays = buildRecentCheckinDays(entries, 30, now);
   const recent30d = filterByDays(entries, 30, now);
@@ -140,7 +141,7 @@ export const buildRecentCheckinDays = (
   return Array.from({ length: days }).map((_, index) => {
     const current = new Date(today);
     current.setDate(today.getDate() - index);
-    const date = current.toISOString().split("T")[0] ?? "";
+    const date = `${current.getFullYear()}-${String(current.getMonth() + 1).padStart(2, "0")}-${String(current.getDate()).padStart(2, "0")}`;
     const entry = entryByDate.get(date);
     const isBeforeTrackingStart =
       !entry && firstCheckinDate !== null && date < firstCheckinDate;
@@ -156,11 +157,11 @@ export const buildRecentCheckinDays = (
 
 export const checkinMoodColor = (mood: MoodValue | null): string => {
   const colors: Record<number, string> = {
-    1: "hsl(0, 75%, 55%, 0.35)",
-    2: "hsl(25, 80%, 52%, 0.45)",
-    3: "hsl(50, 80%, 50%, 0.55)",
-    4: "hsl(120, 55%, 45%, 0.65)",
-    5: "hsl(140, 70%, 50%, 0.8)",
+    1: "rgba(217, 95, 116, 0.4)",
+    2: "rgba(222, 164, 92, 0.5)",
+    3: "rgba(120, 120, 120, 0.55)",
+    4: "rgba(116, 217, 144, 0.65)",
+    5: "rgba(92, 200, 212, 0.8)",
   };
 
   if (mood === null) return "var(--secondary)";
