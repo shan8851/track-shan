@@ -23,7 +23,7 @@ export const filterByTimeRange = <T extends { date: string }>(
   if (days === null) return [...data];
   const cutoff = new Date();
   cutoff.setDate(cutoff.getDate() - days);
-  const cutoffString = cutoff.toISOString().split("T")[0] ?? "";
+  const cutoffString = `${cutoff.getFullYear()}-${String(cutoff.getMonth() + 1).padStart(2, "0")}-${String(cutoff.getDate()).padStart(2, "0")}`;
   return data.filter((entry) => entry.date >= cutoffString);
 };
 
@@ -83,7 +83,7 @@ export const generateYearGrid = (endDate: Date): YearGridDay[] => {
     const dow = current.getDay();
     const col = Math.floor(i / 7);
     days.push({
-      date: current.toISOString().split("T")[0] ?? "",
+      date: `${current.getFullYear()}-${String(current.getMonth() + 1).padStart(2, "0")}-${String(current.getDate()).padStart(2, "0")}`,
       col,
       row: dow,
     });

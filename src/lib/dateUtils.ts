@@ -1,7 +1,9 @@
+const pad = (n: number): string => String(n).padStart(2, "0");
+
 export const toDateString = (date: Date): string => {
   const normalizedDate = new Date(date);
   normalizedDate.setHours(0, 0, 0, 0);
-  return normalizedDate.toISOString().split("T")[0] ?? "";
+  return `${normalizedDate.getFullYear()}-${pad(normalizedDate.getMonth() + 1)}-${pad(normalizedDate.getDate())}`;
 };
 
 export const getStartOfWeek = (date: Date = new Date()): Date => {
