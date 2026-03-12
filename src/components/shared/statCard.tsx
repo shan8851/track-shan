@@ -19,14 +19,14 @@ export const StatCard = ({
     delta === null || delta === undefined || delta === 0
       ? "text-muted-foreground"
       : (delta > 0) === positiveIsGood
-        ? "text-emerald-400"
-        : "text-red-400";
+        ? "text-signal-green"
+        : "text-signal-red";
 
   const deltaSign = delta !== null && delta !== undefined && delta > 0 ? "+" : "";
 
   return (
     <div className="border border-border bg-card p-4">
-      <p className="text-xs text-muted-foreground uppercase tracking-wider">
+      <p className="text-xs text-muted-foreground uppercase tracking-[0.24em]">
         {label}
       </p>
       <p className="text-2xl font-bold text-terminal mt-1">

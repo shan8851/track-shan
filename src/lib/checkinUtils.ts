@@ -156,11 +156,11 @@ export const buildRecentCheckinDays = (
 
 export const checkinMoodColor = (mood: MoodValue | null): string => {
   const colors: Record<number, string> = {
-    1: "hsl(0, 75%, 55%, 0.35)",
-    2: "hsl(25, 80%, 52%, 0.45)",
-    3: "hsl(50, 80%, 50%, 0.55)",
-    4: "hsl(120, 55%, 45%, 0.65)",
-    5: "hsl(140, 70%, 50%, 0.8)",
+    1: "rgba(217, 95, 116, 0.4)",
+    2: "rgba(222, 164, 92, 0.5)",
+    3: "rgba(120, 120, 120, 0.55)",
+    4: "rgba(116, 217, 144, 0.65)",
+    5: "rgba(92, 200, 212, 0.8)",
   };
 
   if (mood === null) return "var(--secondary)";

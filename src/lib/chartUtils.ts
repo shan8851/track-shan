@@ -1,6 +1,7 @@
 import type {
   ExerciseChartEntry,
   HeatmapDayData,
+  WritingChartEntry,
   WeightChartPoint,
 } from "@/types/charts";
 
@@ -45,6 +46,17 @@ export const aggregateExerciseByDay = (
   entries.forEach((entry) => {
     const existing = dayMap.get(entry.date) ?? 0;
     dayMap.set(entry.date, existing + entry.durationMinutes);
+  });
+  return dayMap;
+};
+
+export const aggregateWritingByDay = (
+  entries: readonly WritingChartEntry[],
+): Map<string, number> => {
+  const dayMap = new Map<string, number>();
+  entries.forEach((entry) => {
+    const existing = dayMap.get(entry.date) ?? 0;
+    dayMap.set(entry.date, existing + 1);
   });
   return dayMap;
 };
@@ -111,11 +123,11 @@ export const computeIntensityLevels = (
 export const heatmapColor = (intensity: number): string => {
   const opacities: Record<number, string> = {
     0: "var(--secondary)",
-    1: "hsl(140, 70%, 50%, 0.15)",
-    2: "hsl(140, 70%, 50%, 0.35)",
-    3: "hsl(140, 70%, 50%, 0.55)",
-    4: "hsl(140, 70%, 50%, 0.75)",
-    5: "hsl(140, 70%, 50%, 0.95)",
+    1: "rgba(92, 200, 212, 0.16)",
+    2: "rgba(92, 200, 212, 0.32)",
+    3: "rgba(92, 200, 212, 0.5)",
+    4: "rgba(92, 200, 212, 0.7)",
+    5: "rgba(92, 200, 212, 0.9)",
   };
   return opacities[intensity] ?? "var(--secondary)";
 };

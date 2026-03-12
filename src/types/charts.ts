@@ -1,3 +1,5 @@
+import type { WritingType } from "@/types/writing";
+
 export type WeightChartPoint = {
   date: string;
   weightKg: number;
@@ -19,5 +21,17 @@ export type TypeBreakdownItem = {
   type: string;
   label: string;
   totalMinutes: number;
+  fill: string;
+};
+
+export type WritingChartEntry = {
+  date: string;
+  writingType: WritingType;
+};
+
+export type WritingTypeBreakdownItem = {
+  type: WritingType;
+  label: string;
+  totalEntries: number;
   fill: string;
 };

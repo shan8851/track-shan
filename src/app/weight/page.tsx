@@ -29,9 +29,8 @@ const BmiStatCard = () => {
 
 const WeightPage = () => (
   <main className="min-h-screen bg-background">
-    <PageHeader backHref="/" />
+    <PageHeader backHref="/" title="> weight" />
     <div className="max-w-5xl mx-auto px-6 py-8 space-y-8">
-      <h2 className="text-lg font-bold text-terminal">&gt; weight</h2>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         <div className="col-span-2 md:col-span-4">
           <WeightStats />

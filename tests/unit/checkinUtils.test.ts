@@ -158,8 +158,8 @@ describe("checkinUtils", () => {
   });
 
   it("returns colors for mood and missing days", () => {
-    expect(checkinMoodColor(1)).toContain("hsl(");
-    expect(checkinMoodColor(5)).toContain("hsl(");
+    expect(checkinMoodColor(1)).toBe("rgba(217, 95, 116, 0.4)");
+    expect(checkinMoodColor(5)).toBe("rgba(92, 200, 212, 0.8)");
     expect(checkinMoodColor(null)).toBe("var(--secondary)");
   });
 });
